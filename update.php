@@ -24,10 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-// Ma'lumotlar bazasi va talaba obyektini yaratish
-$db = (new Database())->connect();
-$student = new Student($db);
-
 // URL orqali kelgan talaba ID sini olish
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
