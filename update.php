@@ -30,20 +30,23 @@ $student = new Student($db);
 
 // URL orqali kelgan talaba ID sini olish
 if (isset($_GET['id'])) {
-    $student->id = $_GET['id'];
+    $id = $_GET['id'];
+    $currentStudent = $student->readOne($id); // Bitta talabani olish funksiyasi
 
-    // Talaba ma'lumotlarini olish
-    $stmt = $student->read();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if ($result) {
-        $student->name = $result['name'];
-        $student->email = $result['email'];
-        $student->course = $result['course'];
+    if ($currentStudent) {
+        // Talaba ma'lumotlarini ko'rsatish
+        echo "<form action='update.php' method='post'>";
+        echo "<input type='hidden' name='id' value='{$currentStudent['id']}'>";
+        echo "<input type='text' name='name' value='{$currentStudent['name']}'>";
+        echo "<input type='email' name='email' value='{$currentStudent['email']}'>";
+        echo "<input type='text' name='course' value='{$currentStudent['course']}'>";
+        echo "<button type='submit'>Yangilash</button>";
+        echo "</form>";
     } else {
-        echo "Talaba topilmadi!";
-        exit;
+        echo "Talaba topilmadi.";
     }
+} else {
+    echo "ID parametri kiritilmagan.";
 }
 
 // Tahrirlash so'rovi

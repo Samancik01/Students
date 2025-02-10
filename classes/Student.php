@@ -47,6 +47,20 @@ class Student {
     
             return $stmt;
         }
+    // Talaba id sini olish
+    public function readOne() {
+        $query = "SELECT * FROM " . $this->table . " WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(":id", $this->id);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $this->name = $row['name'];
+        $this->email = $row['email'];
+        $this->course = $row['course'];
+    }
 
     // Talaba ma'lumotlarini yangilash
     public function update() {
